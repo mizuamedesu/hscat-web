@@ -1,11 +1,82 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from '../components/Layout.astro';
+import TextAnimation from '../components/TextAnimation.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const shortDescription = `大学の学生宿舎に住んでいる猫を主な対象として地域ねこ活動を行う学生団体です。`;
+
+const longDescription = `
+Trap（捕獲する） Neuter（避妊手術をする） Release（元に戻す）
+
+猫達のお世話をしながら、優しく頭数を減らすことを目的としています。
+
+他には4月の新勧活動や11月雙峰祭での出店、12月の猫シンポジウムへの参加、追いコンや長期休暇では旅行やBBQなど様々な活動を行っています。
+猫に興味のある人、地域ねこ活動に興味がある人は見学に来てみてください！
+`;
+
+const newsItems = [
+  {
+    title: "春の新歓イベント開催",
+    link: "#",
+  },
+  {
+    title: "夏休み期間の猫のお世話募集",
+    link: "#",
+  },
+  {
+    title: "学園祭（雙峰祭）での出店情報",
+    link: "#",
+  },
+];
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="HSCaT | ホーム">
+  <!-- ヒーローセクション（テキストアニメ＋背景など） -->
+  <section class="relative h-screen w-full flex items-center justify-center bg-[url('/hero-background.jpg')] bg-cover bg-center">
+    <div class="bg-black/40 absolute inset-0"></div>
+    <div class="relative text-center">
+      <TextAnimation text="Humane Society Cat's Assistance in Tsukuba" />
+    </div>
+  </section>
+
+  <!-- 概要セクション -->
+  <section class="max-w-3xl mx-auto px-4 py-12">
+    <h2 class="text-2xl font-bold mb-4 text-primary">HSCaTについて</h2>
+    <p class="mb-6 text-lg">
+      {shortDescription}
+    </p>
+
+    <div class="space-y-4 whitespace-pre-line">
+      {longDescription}
+    </div>
+  </section>
+
+  <!-- ニュース一覧セクション -->
+  <section class="max-w-3xl mx-auto px-4 pb-12">
+    <h2 class="text-2xl font-bold mb-4 text-primary">ニュース一覧</h2>
+    <ul class="space-y-3">
+      {newsItems.map((news) => (
+        <li>
+          <a
+            href={news.link}
+            class="text-blue-600 hover:text-blue-800 underline"
+            target="_blank" rel="noopener noreferrer"
+          >
+            {news.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-4">
+      <a href="/news" class="inline-block mt-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition">
+        ニュース一覧ページへ
+      </a>
+    </div>
+  </section>
+
+  <!-- ブログリンク -->
+  <section class="max-w-3xl mx-auto px-4 pb-16">
+    <a href="/blog" class="inline-block px-4 py-2 bg-secondary text-white rounded hover:bg-orange-500 transition">
+      ブログを見る
+    </a>
+  </section>
 </Layout>

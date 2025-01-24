@@ -1,0 +1,38 @@
+---
+import Layout from '../../components/Layout.astro';
+
+// サンプルのブログ記事データ (slugなど)
+const blogPosts = [
+  {
+    slug: "sample-post",
+    title: "サンプルブログ投稿",
+    summary: "これはサンプルのブログ投稿です。"
+  },
+  {
+    slug: "another-post",
+    title: "もうひとつの投稿",
+    summary: "別の記事のサンプルです。"
+  }
+];
+---
+
+<Layout title="HSCaT | ブログ一覧">
+  <section class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-6 text-primary">ブログ一覧</h1>
+    <ul class="space-y-6">
+      {blogPosts.map((post) => (
+        <li class="p-4 rounded bg-white shadow">
+          <a href={`/blog/${post.slug}`} class="group block mb-1">
+            <h2 class="text-xl font-semibold text-blue-600 group-hover:text-blue-800 transition">
+              {post.title}
+            </h2>
+          </a>
+          <p class="text-gray-700">{post.summary}</p>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-8">
+      <a href="/" class="text-blue-600 underline hover:text-blue-800 transition">トップページへ戻る</a>
+    </div>
+  </section>
+</Layout>

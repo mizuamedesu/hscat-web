@@ -1,0 +1,27 @@
+---
+const { text = "Humane Society Cat's Assistance in Tsukuba" } = Astro.props;
+---
+
+<style lang="css">
+.text-animation {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.2s forwards;
+  animation-delay: 0.5s; /* 遅延をつけたい場合 */
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<div class="text-animation">
+  {text}
+</div>

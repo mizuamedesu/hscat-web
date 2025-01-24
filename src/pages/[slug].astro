@@ -1,0 +1,42 @@
+---
+export async function getStaticPaths() {
+  // 例としてダミーデータ
+  // 可能な slug を配列で列挙
+  return [
+    { params: { slug: "sample-post" } },
+    { params: { slug: "another-post" } },
+  ];
+}
+
+const allPosts: Record<string, { title: string; content: string }> = {
+  "sample-post": {
+    title: "サンプルブログ投稿",
+    content: "<p>サンプル本文</p>"
+  },
+  "another-post": {
+    title: "もうひとつの投稿",
+    content: "<p>もうひとつの本文</p>"
+  }
+};
+
+const slugParam = Astro.params.slug ?? "";
+const post = allPosts[slugParam];
+const notFound = !post;
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>{notFound ? "Not Found" : post.title}</title>
+</head>
+<body>
+  {notFound ? (
+    <h1>404 Not Found</h1>
+  ) : (
+    <>
+      <h1>{post.title}</h1>
+      <div set:html={post.content}></div>
+    </>
+  )}
+</body>
+</html>

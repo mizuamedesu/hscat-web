@@ -1,0 +1,47 @@
+---
+import Layout from '../components/Layout.astro';
+
+// ダミーデータ (実際はDBやCMSから取得するなど)
+const newsItems = [
+  {
+    title: "春の新歓イベント開催",
+    description: "詳細内容・・・",
+    link: "https://example.com/news/spring-event",
+  },
+  {
+    title: "夏休み期間の猫のお世話募集",
+    description: "詳細内容・・・",
+    link: "https://example.com/news/summer-cat-care",
+  },
+  {
+    title: "学園祭（雙峰祭）での出店情報",
+    description: "詳細内容・・・",
+    link: "https://example.com/news/festival",
+  },
+];
+---
+
+<Layout title="HSCaT | ニュース">
+  <section class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-6 text-primary">ニュース一覧</h1>
+    <ul class="space-y-8">
+      {newsItems.map((item) => (
+        <li class="p-4 rounded bg-white shadow">
+          <h2 class="text-xl font-semibold mb-2">{item.title}</h2>
+          <p class="mb-2 text-gray-700">{item.description}</p>
+          <a
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-600 underline hover:text-blue-800 transition"
+          >
+            続きを読む
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-8">
+      <a href="/" class="text-blue-600 underline hover:text-blue-800 transition">トップページへ戻る</a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,35 @@
+---
+import '../styles/base.css';
+const { title = "HSCaT" } = Astro.props;
+---
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>{title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body class="font-sans text-gray-800 bg-gray-50 min-h-screen flex flex-col">
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="text-xl font-bold text-indigo-600">
+        HSCaT
+      </div>
+      <nav class="flex gap-6 text-gray-600">
+        <a href="/" class="hover:text-indigo-600 transition">Home</a>
+        <a href="/news" class="hover:text-indigo-600 transition">News</a>
+        <a href="/blog" class="hover:text-indigo-600 transition">Blog</a>
+      </nav>
+    </div>
+  </header>
+  <main class="mt-8 mb-16 flex-1">
+    <slot />
+  </main>
+  <footer class="bg-gray-800 text-white py-6">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-sm">
+        &copy; {new Date().getFullYear()} HSCaT. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
