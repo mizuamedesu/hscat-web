@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import markdown from '@astrojs/markdown-it';
 
 export default defineConfig({
   site: 'http://localhost:4321', 
@@ -8,6 +9,9 @@ export default defineConfig({
       config: {
         applyBaseStyles: true, // Tailwind 
       },
+    }),
+    markdown({
+
     }),
   ],
 });

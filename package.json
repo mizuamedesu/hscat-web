@@ -9,7 +9,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.1.9"
+    "@astrojs/markdown-remark": "^6.0.2",
+    "astro": "^5.1.9",
+    "gray-matter": "^4.0.3"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^5.1.5",
