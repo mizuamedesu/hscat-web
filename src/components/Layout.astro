@@ -7,6 +7,7 @@ const { title = "HSCaT" } = Astro.props;
  <meta charset="utf-8" />
  <title>{title}</title>
  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body class="font-['Zen_Kaku_Gothic_New'] text-gray-800 bg-gray-50 min-h-screen flex flex-col">
  <header class="bg-white shadow">
@@ -26,7 +27,7 @@ const { title = "HSCaT" } = Astro.props;
    </div>
  </main>
  <div class="relative">
-  <img src="/neko.png" alt="猫" class="absolute left-8 bottom-0 w-32 h-auto md:w-32 w-16" />
+  <img src="/neko.png" alt="猫" class="absolute left-8 bottom-0 w-16 md:w-32 h-auto" />
 </div>
  <footer class="bg-amber-800 text-white py-6">
    <div class="max-w-7xl mx-auto px-4 text-center">
