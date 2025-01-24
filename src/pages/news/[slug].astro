@@ -1,0 +1,48 @@
+---
+import Layout from '../../components/Layout.astro';
+import type { GetStaticPaths } from 'astro';
+
+interface Frontmatter {
+  title: string;
+  date: string;
+  description?: string;
+}
+
+type MDXContent = {
+  Content: any;
+  frontmatter: Frontmatter;
+  file: string;
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await Astro.glob<MDXContent>('../../content/news/*.md');
+  return posts.map(post => ({
+    params: { 
+      slug: post.file.split('/').pop()?.split('.').shift() ?? '' 
+    },
+    props: { post },
+  }));
+}
+
+type Props = {
+  post: MDXContent;
+};
+
+const { post } = Astro.props;
+const { Content } = post;
+---
+
+<Layout title={post.frontmatter.title}>
+  <article class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-4">{post.frontmatter.title}</h1>
+    <p class="text-gray-600 mb-8">{post.frontmatter.date}</p>
+    <div class="prose max-w-none">
+      <Content />
+    </div>
+    <div class="mt-8">
+      <a href="/news" class="text-blue-600 hover:text-blue-800">
+        ← ニュース一覧に戻る
+      </a>
+    </div>
+  </article>
+</Layout>

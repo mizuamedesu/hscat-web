@@ -1,37 +1,59 @@
 ---
 import Layout from '../components/Layout.astro';
 
-// ダミーデータ (実際はDBやCMSから取得するなど)
-const newsItems = [
-  {
-    title: "WEBサイトをリニューアルしました",
-    description: "詳細内容・・・",
-    link: "https://example.com/news/spring-event",
-  },
-];
+interface Frontmatter {
+  title: string;
+  date: string;
+  description?: string;
+}
+
+type MDXContent = {
+  Content: any;
+  frontmatter: Frontmatter;
+  file: string;
+};
+
+const markdownImports = import.meta.glob<MDXContent>('../content/news/*.md', { eager: true });
+
+const newsItems = Object.entries(markdownImports).map(([path, mod]) => {
+  return {
+    title: mod.frontmatter.title,
+    description: mod.frontmatter.description,
+    date: mod.frontmatter.date,
+    Content: mod.Content,
+    path: path,
+  };
+});
+
+// 日付順にソート (新しい日付が先)
+newsItems.sort((a, b) => b.date.localeCompare(a.date));
 ---
 
 <Layout title="HSCaT | ニュース">
   <section class="max-w-3xl mx-auto px-4 py-12">
     <h1 class="text-3xl font-bold mb-6 text-primary">ニュース一覧</h1>
+
     <ul class="space-y-8">
       {newsItems.map((item) => (
         <li class="p-4 rounded bg-white shadow">
           <h2 class="text-xl font-semibold mb-2">{item.title}</h2>
           <p class="mb-2 text-gray-700">{item.description}</p>
+
+          <!-- リンクタグを正しく書く -->
           <a
-            href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-blue-600 underline hover:text-blue-800 transition"
+            href={`/news/${item.path.split('/').pop()?.split('.').shift()}`}
+            class="block mt-2 text-blue-600 underline hover:text-blue-800 transition"
           >
             続きを読む
           </a>
         </li>
       ))}
     </ul>
+
     <div class="mt-8">
-      <a href="/" class="text-blue-600 underline hover:text-blue-800 transition">トップページへ戻る</a>
+      <a href="/" class="text-blue-600 underline hover:text-blue-800 transition">
+        トップページへ戻る
+      </a>
     </div>
   </section>
 </Layout>

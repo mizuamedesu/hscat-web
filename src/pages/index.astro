@@ -2,6 +2,46 @@
 import Layout from '../components/Layout.astro';
 import TextAnimation from '../components/TextAnimation.astro';
 
+//
+// 1. フロントマターやMarkdownの型を定義
+//
+interface Frontmatter {
+  title: string;
+  date: string;
+  description?: string;
+}
+
+type MDXContent = {
+  Content: any;
+  frontmatter: Frontmatter;
+  file: string;
+};
+
+//
+// 2. Markdownの動的インポート
+//
+const markdownImports = import.meta.glob<MDXContent>('../content/news/*.md', { eager: true });
+
+// 配列に変換して扱いやすくする
+let dynamicNewsItems = Object.entries(markdownImports).map(([path, mod]) => {
+  return {
+    title: mod.frontmatter.title,
+    date: mod.frontmatter.date,
+    description: mod.frontmatter.description,
+    Content: mod.Content,
+    path: path,
+  };
+});
+
+// 日付順ソート (新しい日付を先頭に)
+dynamicNewsItems.sort((a, b) => b.date.localeCompare(a.date));
+
+// ここでは最新3件だけを表示例
+const top3News = dynamicNewsItems.slice(0, 3);
+
+//
+// 3. それ以外の既存データや変数
+//
 const shortDescription = `大学の学生宿舎に住んでいる猫を主な対象として地域ねこ活動を行う学生団体です。`;
 
 const longDescription = `
@@ -12,13 +52,6 @@ Trap（捕獲する） Neuter（避妊手術をする） Release（元に戻す�
 他には4月の新勧活動や11月雙峰祭での出店、12月の猫シンポジウムへの参加、追いコンや長期休暇では旅行やBBQなど様々な活動を行っています。
 猫に興味のある人、地域ねこ活動に興味がある人は見学に来てみてください！
 `;
-
-const newsItems = [
-  {
-    title: "WEBサイトをリニューアルしました",
-    link: "#",
-  },
-];
 
 const activityItems = [
   {
@@ -35,6 +68,7 @@ const activityItems = [
   },
 ];
 ---
+
 <Layout title="HSCaT | ホーム">
   <!-- ヒーローセクション（テキストアニメ＋背景など） -->
   <section class="relative h-screen w-full flex items-center justify-center bg-[url('/hero-background.jpg')] bg-cover bg-center">
@@ -85,16 +119,16 @@ const activityItems = [
     </div>
   </section>
 
-  <!-- ニュース一覧セクション -->
+  <!-- ニュース一覧セクション（動的読み込み） -->
   <section class="max-w-3xl mx-auto px-4 pb-12">
     <h2 class="text-2xl font-bold mb-4 text-primary text-center">ニュース一覧</h2>
     <ul class="space-y-3 text-center">
-      {newsItems.map((news) => (
+      {top3News.map((news) => (
         <li>
+          <!-- ニュース詳細ページへのリンク例 -->
           <a
-            href={news.link}
+            href={`/news/${news.path.split('/').pop()?.split('.').shift()}`}
             class="text-blue-600 hover:text-blue-800 underline inline-block"
-            target="_blank" rel="noopener noreferrer"
           >
             {news.title}
           </a>
@@ -102,7 +136,10 @@ const activityItems = [
       ))}
     </ul>
     <div class="mt-4 text-center">
-      <a href="/news" class="inline-block mt-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition">
+      <a
+        href="/news"
+        class="inline-block mt-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition"
+      >
         ニュース一覧ページへ
       </a>
     </div>
