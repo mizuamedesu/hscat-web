@@ -27,6 +27,21 @@ const newsItems = [
     link: "#",
   },
 ];
+
+const activityItems = [
+  {
+    title: "地域ねこ活動",
+    description: "主な活動は餌やりとTNRです。平砂学生宿舎、追越学生宿舎、一の矢学生宿舎に餌やりに行きます。",
+  },
+  {
+    title: "イベント企画",
+    description: "新勧活動や学園祭での出店等をしています。",
+  },
+  {
+    title: "レクリエーション",
+    description: "BBQや猫カフェ、猫島など、メンバー同士の交流を深めるレクリエーション活動も行っています。",
+  },
+];
 ---
 
 <Layout title="HSCaT | ホーム">
@@ -39,26 +54,55 @@ const newsItems = [
   </section>
 
   <!-- 概要セクション -->
-  <section class="max-w-3xl mx-auto px-4 py-12">
-    <h2 class="text-2xl font-bold mb-4 text-primary">HSCaTについて</h2>
-    <p class="mb-6 text-lg">
-      {shortDescription}
-    </p>
+  <section class="max-w-5xl mx-auto px-4 py-12">
+    <!-- タイトルを中央に配置 -->
+    <h2 class="text-2xl font-bold mb-6 text-primary text-center">HSCaTについて</h2>
 
-    <div class="space-y-4 whitespace-pre-line">
-      {longDescription}
+    <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-6">
+      <!-- 左側コンテナ（画像） -->
+      <div class="md:w-1/2">
+        <img
+          src="/esa.png"
+          alt="HSCaTの活動画像"
+          class="w-full h-auto rounded shadow"
+        />
+      </div>
+
+      <!-- 右側コンテナ（テキスト） -->
+      <div class="md:w-1/2">
+        <p class="mb-6 text-lg">
+          {shortDescription}
+        </p>
+
+        <div class="space-y-4 whitespace-pre-line">
+          {longDescription}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 活動内容セクション -->
+  <section class="max-w-5xl mx-auto px-4 py-12">
+    <h2 class="text-2xl font-bold mb-6 text-primary text-center">活動内容</h2>
+    <div class="space-y-6">
+      {activityItems.map((activity) => (
+        <div class="border-b pb-4">
+          <h3 class="text-xl font-semibold mb-2">{activity.title}</h3>
+          <p class="text-gray-700">{activity.description}</p>
+        </div>
+      ))}
     </div>
   </section>
 
   <!-- ニュース一覧セクション -->
   <section class="max-w-3xl mx-auto px-4 pb-12">
-    <h2 class="text-2xl font-bold mb-4 text-primary">ニュース一覧</h2>
-    <ul class="space-y-3">
+    <h2 class="text-2xl font-bold mb-4 text-primary text-center">ニュース一覧</h2>
+    <ul class="space-y-3 text-center">
       {newsItems.map((news) => (
         <li>
           <a
             href={news.link}
-            class="text-blue-600 hover:text-blue-800 underline"
+            class="text-blue-600 hover:text-blue-800 underline inline-block"
             target="_blank" rel="noopener noreferrer"
           >
             {news.title}
@@ -66,7 +110,7 @@ const newsItems = [
         </li>
       ))}
     </ul>
-    <div class="mt-4">
+    <div class="mt-4 text-center">
       <a href="/news" class="inline-block mt-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition">
         ニュース一覧ページへ
       </a>

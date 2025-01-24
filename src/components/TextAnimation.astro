@@ -3,18 +3,58 @@ const { text = "Humane Society Cat's Assistance in Tsukuba" } = Astro.props;
 ---
 
 <style lang="css">
-.text-animation {
+.container {
+  position: relative;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.text-container {
+  position: relative;
   display: inline-block;
+}
+
+.text {
   font-size: 2rem;
   font-weight: 700;
   color: #ffffff;
   opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1.2s forwards;
-  animation-delay: 0.5s; /* 遅延をつけたい場合 */
+  transform: translateY(10px);
+  animation: revealText 0.6s forwards;
+  animation-delay: 1.8s;
 }
 
-@keyframes fadeInUp {
+.rectangle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #4a90e2;
+  animation: growRect 0.8s cubic-bezier(0.86, 0, 0.07, 1) forwards,
+             shrinkRect 0.8s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+  animation-delay: 0.2s, 1.2s;
+}
+
+@keyframes growRect {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes shrinkRect {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes revealText {
   to {
     opacity: 1;
     transform: translateY(0);
@@ -22,6 +62,9 @@ const { text = "Humane Society Cat's Assistance in Tsukuba" } = Astro.props;
 }
 </style>
 
-<div class="text-animation">
-  {text}
+<div class="container">
+  <div class="text-container">
+    <div class="rectangle"></div>
+    <div class="text">{text}</div>
+  </div>
 </div>
