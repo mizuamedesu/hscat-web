@@ -25,13 +25,12 @@ const newsItems = Object.entries(markdownImports).map(([path, mod]) => {
   };
 });
 
-// 日付順にソート (新しい日付が先)
 newsItems.sort((a, b) => b.date.localeCompare(a.date));
 ---
 
 <Layout title="HSCaT | ニュース">
   <section class="max-w-3xl mx-auto px-4 py-12">
-    <h1 class="text-3xl font-bold mb-6 text-primary">ニュース一覧</h1>
+    <h1 class="text-3xl font-bold mb-6 text-amber-800">ニュース一覧</h1>
 
     <ul class="space-y-8">
       {newsItems.map((item) => (
@@ -39,7 +38,6 @@ newsItems.sort((a, b) => b.date.localeCompare(a.date));
           <h2 class="text-xl font-semibold mb-2">{item.title}</h2>
           <p class="mb-2 text-gray-700">{item.description}</p>
 
-          <!-- リンクタグを正しく書く -->
           <a
             href={`/news/${item.path.split('/').pop()?.split('.').shift()}`}
             class="block mt-2 text-blue-600 underline hover:text-blue-800 transition"

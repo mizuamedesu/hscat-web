@@ -2,9 +2,6 @@
 import Layout from '../components/Layout.astro';
 import TextAnimation from '../components/TextAnimation.astro';
 
-//
-// 1. フロントマターやMarkdownの型を定義
-//
 interface Frontmatter {
   title: string;
   date: string;
@@ -17,12 +14,8 @@ type MDXContent = {
   file: string;
 };
 
-//
-// 2. Markdownの動的インポート
-//
 const markdownImports = import.meta.glob<MDXContent>('../content/news/*.md', { eager: true });
 
-// 配列に変換して扱いやすくする
 let dynamicNewsItems = Object.entries(markdownImports).map(([path, mod]) => {
   return {
     title: mod.frontmatter.title,
@@ -33,15 +26,10 @@ let dynamicNewsItems = Object.entries(markdownImports).map(([path, mod]) => {
   };
 });
 
-// 日付順ソート (新しい日付を先頭に)
 dynamicNewsItems.sort((a, b) => b.date.localeCompare(a.date));
 
-// ここでは最新3件だけを表示例
 const top3News = dynamicNewsItems.slice(0, 3);
 
-//
-// 3. それ以外の既存データや変数
-//
 const shortDescription = `大学の学生宿舎に住んでいる猫を主な対象として地域ねこ活動を行う学生団体です。`;
 
 const longDescription = `
@@ -70,21 +58,17 @@ const activityItems = [
 ---
 
 <Layout title="HSCaT | ホーム">
-  <!-- ヒーローセクション（テキストアニメ＋背景など） -->
-  <section class="relative h-screen w-full flex items-center justify-center bg-[url('/hero-background.jpg')] bg-cover bg-center">
+  <section class="relative h-screen w-full flex items-center justify-center bg-[url('/hero-background.jpg')] bg-cover bg-center font-['Zen_Kaku_Gothic_New']">
     <div class="bg-black/40 absolute inset-0"></div>
     <div class="relative text-center">
       <TextAnimation text="Humane Society Cat's Assistance in Tsukuba" />
     </div>
   </section>
 
-  <!-- 概要セクション -->
   <section class="max-w-5xl mx-auto px-4 py-12">
-    <!-- タイトルを中央に配置 -->
-    <h2 class="text-2xl font-bold mb-6 text-primary text-center">HSCaTについて</h2>
+    <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">HSCaTについて</h2>
 
     <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-6">
-      <!-- 左側コンテナ（画像） -->
       <div class="md:w-1/2">
         <img
           src="/esa.png"
@@ -93,7 +77,6 @@ const activityItems = [
         />
       </div>
 
-      <!-- 右側コンテナ（テキスト） -->
       <div class="md:w-1/2">
         <p class="mb-6 text-lg">
           {shortDescription}
@@ -106,29 +89,26 @@ const activityItems = [
     </div>
   </section>
 
-  <!-- 活動内容セクション -->
   <section class="max-w-5xl mx-auto px-4 py-12">
-    <h2 class="text-2xl font-bold mb-6 text-primary text-center">活動内容</h2>
+    <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">活動内容</h2>
     <div class="space-y-6">
       {activityItems.map((activity) => (
         <div class="border-b pb-4">
-          <h3 class="text-xl font-semibold mb-2">{activity.title}</h3>
+          <h3 class="text-xl font-semibold mb-2 text-amber-800">{activity.title}</h3>
           <p class="text-gray-700">{activity.description}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- ニュース一覧セクション（動的読み込み） -->
   <section class="max-w-3xl mx-auto px-4 pb-12">
-    <h2 class="text-2xl font-bold mb-4 text-primary text-center">ニュース一覧</h2>
+    <h2 class="text-2xl font-bold mb-4 text-amber-800 text-center">ニュース一覧</h2>
     <ul class="space-y-3 text-center">
       {top3News.map((news) => (
         <li>
-          <!-- ニュース詳細ページへのリンク例 -->
           <a
             href={`/news/${news.path.split('/').pop()?.split('.').shift()}`}
-            class="text-blue-600 hover:text-blue-800 underline inline-block"
+            class="text-amber-800 hover:text-amber-600 underline inline-block"
           >
             {news.title}
           </a>
@@ -138,39 +118,34 @@ const activityItems = [
     <div class="mt-4 text-center">
       <a
         href="/news"
-        class="inline-block mt-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition"
+        class="inline-block mt-2 px-4 py-2 bg-amber-800 text-white rounded hover:bg-amber-700 transition"
       >
         ニュース一覧ページへ
       </a>
     </div>
   </section>
 
-  <!-- リンク/問い合わせセクション -->
   <section class="max-w-3xl mx-auto px-4 pb-16">
-    <h2 class="text-2xl font-bold mb-6 text-primary text-center">リンク/問い合わせ</h2>
+    <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">リンク/問い合わせ</h2>
     <div class="flex flex-wrap justify-center items-center space-x-2">
-      <!-- X -->
       <a href="https://x.com/HSCaT1" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2">
         <img src="/x.png" alt="X" class="w-8 h-8" />
       </a>
       
       <span class="mx-2">/</span>
       
-      <!-- Instagram -->
       <a href="https://www.instagram.com/itf_hscat" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2">
         <img src="/insta.png" alt="Instagram" class="w-8 h-8" />
       </a>
       
       <span class="mx-2">/</span>
       
-      <!-- メール -->
       <a href="mailto:hscat@gmail.com" class="flex items-center space-x-2">
         <img src="/mail.png" alt="メール" class="w-8 h-8" />
       </a>
       
       <span class="mx-2">/</span>
       
-      <!-- 技術的な問い合わせ -->
       <a href="https://x.com/mizuameisgod" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2">
         <img src="/tool.png" alt="技術的な問い合わせ" class="w-8 h-8" />
       </a>

@@ -17,11 +17,13 @@ const { text = "Humane Society Cat's Assistance in Tsukuba" } = Astro.props;
 .text {
   font-size: 2rem;
   font-weight: 700;
+  font-family: 'Zen Maru Gothic';
   color: #ffffff;
   opacity: 0;
-  transform: translateY(10px);
-  animation: revealText 0.6s forwards;
-  animation-delay: 1.8s;
+  position: relative;
+  z-index: 1;
+  animation: showText 0.1s forwards;
+  animation-delay: 0.8s;
 }
 
 .rectangle {
@@ -30,41 +32,37 @@ const { text = "Humane Society Cat's Assistance in Tsukuba" } = Astro.props;
   left: 0;
   width: 0;
   height: 100%;
-  background-color: #4a90e2;
+  background-color: #925d5d;
+  z-index: 2;
   animation: growRect 0.8s cubic-bezier(0.86, 0, 0.07, 1) forwards,
              shrinkRect 0.8s cubic-bezier(0.86, 0, 0.07, 1) forwards;
-  animation-delay: 0.2s, 1.2s;
+  animation-delay: 0s, 0.8s;
 }
 
 @keyframes growRect {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+  from { width: 0; }
+  to { width: 100%; }
 }
 
 @keyframes shrinkRect {
   from {
     transform: translateX(0);
+    opacity: 1;
   }
   to {
     transform: translateX(100%);
+    opacity: 0;
   }
 }
 
-@keyframes revealText {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes showText {
+  to { opacity: 1; }
 }
 </style>
 
 <div class="container">
   <div class="text-container">
-    <div class="rectangle"></div>
     <div class="text">{text}</div>
+    <div class="rectangle"></div>
   </div>
 </div>
