@@ -1,7 +1,7 @@
 ---
 title: "WEBサイトを公開しました"
 date: "2025-01-24"
-description: ""
+description: "頑張りました"
 ---
 
-Astroを使用して、WEBサイトをリニューアルしました。
+Astroを使用してWEBサイトを作成しました。
