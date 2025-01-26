@@ -58,6 +58,7 @@ const activityItems = [
 ---
 
 <Layout title="HSCaT | ホーム">
+  {/* Heroセクション */}
   <section class="relative h-screen w-full flex items-center justify-center bg-[url('/hero-background.jpg')] bg-cover bg-center font-['Zen_Kaku_Gothic_New']">
     <div class="bg-black/40 absolute inset-0"></div>
     <div class="relative text-center">
@@ -65,6 +66,7 @@ const activityItems = [
     </div>
   </section>
 
+  {/* HSCaTについて */}
   <section class="max-w-5xl mx-auto px-4 py-12">
     <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">HSCaTについて</h2>
 
@@ -89,6 +91,7 @@ const activityItems = [
     </div>
   </section>
 
+  {/* 活動内容 */}
   <section class="max-w-5xl mx-auto px-4 py-12">
     <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">活動内容</h2>
     <div class="space-y-6">
@@ -101,13 +104,13 @@ const activityItems = [
     </div>
   </section>
 
+  {/* ニュース一覧 */}
   <section class="max-w-3xl mx-auto px-4 pb-12">
     <h2 class="text-2xl font-bold mb-4 text-amber-800 text-center">ニュース一覧</h2>
     <div class="flex flex-col items-center">
-      <ul class="space-y-3 w-full list-none">
+      <ul class="list-none p-0 m-0 space-y-3 w-full text-center">
         {top3News.map((news) => (
-          <li class="flex justify-center">
-            <span class="mr-2">•</span>
+          <li class="text-center">
             <a
               href={`/news/${news.path.split('/').pop()?.split('.').shift()}`}
               class="text-amber-800 hover:text-amber-600 underline"
@@ -128,6 +131,7 @@ const activityItems = [
     </div>
   </section>
 
+  {/* リンク/問い合わせ */}
   <section class="max-w-3xl mx-auto px-4 pb-16">
     <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">リンク/問い合わせ</h2>
     <div class="flex flex-wrap justify-center items-center space-x-2">

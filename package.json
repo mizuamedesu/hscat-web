@@ -12,7 +12,8 @@
     "@astrojs/markdown-remark": "^6.0.2",
     "@astrojs/sitemap": "^3.2.1",
     "astro": "^5.1.9",
-    "gray-matter": "^4.0.3"
+    "gray-matter": "^4.0.3",
+    "image-downloader": "^4.3.0"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^5.1.5",
