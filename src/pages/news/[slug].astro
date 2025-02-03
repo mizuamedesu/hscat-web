@@ -6,6 +6,7 @@ interface Frontmatter {
   title: string;
   date: string;
   description?: string;
+  images?: string; 
 }
 
 type MDXContent = {
@@ -32,8 +33,15 @@ const { post } = Astro.props;
 const { Content } = post;
 ---
 
-<Layout title={post.frontmatter.title}>
+<Layout title={post.frontmatter.title} image={post.frontmatter.images}>
   <article class="max-w-3xl mx-auto px-4 py-12">
+    {post.frontmatter.images && (
+      <img
+        src={post.frontmatter.images}  
+        alt={post.frontmatter.title}
+        class="w-full h-auto mb-8 object-cover"
+      />
+    )}
     <h1 class="text-3xl font-bold mb-4">{post.frontmatter.title}</h1>
     <p class="text-gray-600 mb-8">{post.frontmatter.date}</p>
     <div class="prose max-w-none">

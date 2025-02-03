@@ -5,6 +5,7 @@ interface Frontmatter {
   title: string;
   date: string;
   description?: string;
+  images?: string;  // プロパティ名を images に合わせる
 }
 
 type MDXContent = {
@@ -20,6 +21,7 @@ const newsItems = Object.entries(markdownImports).map(([path, mod]) => {
     title: mod.frontmatter.title,
     description: mod.frontmatter.description,
     date: mod.frontmatter.date,
+    images: mod.frontmatter.images, // images プロパティをそのままマッピング
     Content: mod.Content,
     path: path,
   };
@@ -35,6 +37,14 @@ newsItems.sort((a, b) => b.date.localeCompare(a.date));
     <ul class="space-y-8">
       {newsItems.map((item) => (
         <li class="p-4 rounded bg-white shadow">
+          {item.images && (
+            // 相対パスのまま使用するので、変換処理は不要
+            <img
+              src={item.images}
+              alt={item.title}
+              class="w-full h-auto mb-4 object-cover"
+            />
+          )}
           <h2 class="text-xl font-semibold mb-2">{item.title}</h2>
           <p class="mb-2 text-gray-700">{item.description}</p>
 
