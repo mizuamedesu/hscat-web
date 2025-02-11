@@ -5,7 +5,7 @@ const { title = "HSCaT", image } = Astro.props;
 // image が指定されていれば、絶対パスに変換（httpで始まっていなければドメインを付与）
 const ogImage = image
   ? (image.startsWith("http") ? image : `https://hscat.org${image}`)
-  : "https://hscat.org/ogp.png";
+  : "https://hscat.org/ogp.jpeg";
 ---
 <html lang="ja">
   <head>
