@@ -1,6 +1,6 @@
 ---
-import Layout from '../components/Layout.astro';
-import TextAnimation from '../components/TextAnimation.astro';
+import Layout from "../components/Layout.astro";
+import TextAnimation from "../components/TextAnimation.astro";
 
 interface Frontmatter {
   title: string;
@@ -14,7 +14,9 @@ type MDXContent = {
   file: string;
 };
 
-const markdownImports = import.meta.glob<MDXContent>('../content/news/*.md', { eager: true });
+const markdownImports = import.meta.glob<MDXContent>("../content/news/*.md", {
+  eager: true,
+});
 
 let dynamicNewsItems = Object.entries(markdownImports).map(([path, mod]) => {
   return {
@@ -44,7 +46,8 @@ Trap（捕獲する） Neuter（避妊手術をする） Release（元に戻す�
 const activityItems = [
   {
     title: "地域ねこ活動",
-    description: "主な活動は餌やりとTNRです。平砂学生宿舎、追越学生宿舎、一の矢学生宿舎に餌やりに行きます。",
+    description:
+      "主な活動は餌やりとTNRです。平砂学生宿舎、追越学生宿舎、一の矢学生宿舎に餌やりに行きます。",
   },
   {
     title: "イベント企画",
@@ -52,14 +55,17 @@ const activityItems = [
   },
   {
     title: "交流・レクリエーション",
-    description: "BBQや猫カフェ、猫島など、メンバー同士の交流を深めるレクリエーション活動も行っています。",
+    description:
+      "BBQや猫カフェ、猫島など、メンバー同士の交流を深めるレクリエーション活動も行っています。",
   },
 ];
 ---
 
 <Layout title="HSCaT | ホーム">
   {/* Heroセクション */}
-  <section class="relative h-screen w-full flex items-center justify-center bg-[url('/hero-background.jpg')] bg-cover bg-center font-['Zen_Kaku_Gothic_New']">
+  <section
+    class="relative h-screen w-full flex items-center justify-center bg-[url('/hero-background.jpg')] bg-cover bg-center font-['Zen_Kaku_Gothic_New']"
+  >
     <div class="bg-black/40 absolute inset-0"></div>
     <div class="relative text-center">
       <TextAnimation text="Humane Society Cat's Assistance in Tsukuba" />
@@ -68,9 +74,13 @@ const activityItems = [
 
   {/* HSCaTについて */}
   <section class="max-w-5xl mx-auto px-4 py-12">
-    <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">HSCaTについて</h2>
+    <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">
+      HSCaTについて
+    </h2>
 
-    <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-6">
+    <div
+      class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-6"
+    >
       <div class="md:w-1/2">
         <img
           src="/esa.png"
@@ -91,34 +101,61 @@ const activityItems = [
     </div>
   </section>
 
+    {/* 協力団体情報 */}
+    <section class="max-w-3xl mx-auto px-4 pb-12">
+      <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">
+        協力団体情報
+      </h2>
+      <p class="text-center mb-2">
+        本団体は認定NPO法人CAPINと協力して猫のお世話をしています。
+      </p>
+      <p class="text-center">
+        公式サイト: <a
+          href="https://www.capin.love/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-amber-800 hover:text-amber-600 underline"
+          >https://www.capin.love/</a
+        >
+      </p>
+    </section>
+
   {/* 活動内容 */}
   <section class="max-w-5xl mx-auto px-4 py-12">
     <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">活動内容</h2>
     <div class="space-y-6">
-      {activityItems.map((activity) => (
-        <div class="border-b pb-4">
-          <h3 class="text-xl font-semibold mb-2 text-amber-800">{activity.title}</h3>
-          <p class="text-gray-700">{activity.description}</p>
-        </div>
-      ))}
+      {
+        activityItems.map((activity) => (
+          <div class="border-b pb-4">
+            <h3 class="text-xl font-semibold mb-2 text-amber-800">
+              {activity.title}
+            </h3>
+            <p class="text-gray-700">{activity.description}</p>
+          </div>
+        ))
+      }
     </div>
   </section>
 
   {/* ニュース一覧 */}
   <section class="max-w-3xl mx-auto px-4 pb-12">
-    <h2 class="text-2xl font-bold mb-4 text-amber-800 text-center">ニュース一覧</h2>
+    <h2 class="text-2xl font-bold mb-4 text-amber-800 text-center">
+      ニュース一覧
+    </h2>
     <div class="flex flex-col items-center">
       <ul class="list-none p-0 m-0 space-y-3 w-full text-center">
-        {top3News.map((news) => (
-          <li class="text-center">
-            <a
-              href={`/news/${news.path.split('/').pop()?.split('.').shift()}`}
-              class="text-amber-800 hover:text-amber-600 underline"
-            >
-              {news.title}
-            </a>
-          </li>
-        ))}
+        {
+          top3News.map((news) => (
+            <li class="text-center">
+              <a
+                href={`/news/${news.path.split("/").pop()?.split(".").shift()}`}
+                class="text-amber-800 hover:text-amber-600 underline"
+              >
+                {news.title}
+              </a>
+            </li>
+          ))
+        }
       </ul>
       <div class="mt-4">
         <a
@@ -133,27 +170,47 @@ const activityItems = [
 
   {/* リンク/問い合わせ */}
   <section class="max-w-3xl mx-auto px-4 pb-16">
-    <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">リンク/問い合わせ</h2>
+    <h2 class="text-2xl font-bold mb-6 text-amber-800 text-center">
+      リンク/問い合わせ
+    </h2>
     <div class="flex flex-wrap justify-center items-center space-x-2">
-      <a href="https://x.com/HSCaT1" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2">
+      <a
+        href="https://x.com/HSCaT1"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center space-x-2"
+      >
         <img src="/x.png" alt="X" class="w-8 h-8" />
       </a>
-      
+
       <span class="mx-2">/</span>
-      
-      <a href="https://www.instagram.com/itf_hscat" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2">
+
+      <a
+        href="https://www.instagram.com/itf_hscat"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center space-x-2"
+      >
         <img src="/insta.png" alt="Instagram" class="w-8 h-8" />
       </a>
-      
+
       <span class="mx-2">/</span>
-      
-      <a href="mailto:h.s.catmail@gmail.com" class="flex items-center space-x-2">
+
+      <a
+        href="mailto:h.s.catmail@gmail.com"
+        class="flex items-center space-x-2"
+      >
         <img src="/mail.png" alt="メール" class="w-8 h-8" />
       </a>
-      
+
       <span class="mx-2">/</span>
-      
-      <a href="https://github.com/mizuamedesu/hscat-web" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2">
+
+      <a
+        href="https://github.com/mizuamedesu/hscat-web"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center space-x-2"
+      >
         <img src="/code.png" alt="ソースコード" class="w-8 h-8" />
       </a>
     </div>
