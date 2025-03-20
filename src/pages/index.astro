@@ -1,6 +1,7 @@
 ---
 import Layout from "../components/Layout.astro";
 import TextAnimation from "../components/TextAnimation.astro";
+import HeroSlideshow from "../components/HeroSlideshow.astro";
 
 interface Frontmatter {
   title: string;
@@ -63,13 +64,12 @@ const activityItems = [
 
 <Layout title="HSCaT | ホーム">
   {/* Heroセクション */}
-  <section
-    class="relative h-screen w-full flex items-center justify-center bg-[url('/hero-background.jpg')] bg-cover bg-center font-['Zen_Kaku_Gothic_New']"
-  >
-    <div class="bg-black/40 absolute inset-0"></div>
-    <div class="relative text-center">
-      <TextAnimation text="Humane Society Cat's Assistance in Tsukuba" />
-    </div>
+  <section class="relative h-screen w-full font-['Zen_Kaku_Gothic_New']">
+    <HeroSlideshow>
+      <div class="relative z-10 text-center">
+        <TextAnimation text="Humane Society Cat's Assistance in Tsukuba" />
+      </div>
+    </HeroSlideshow>
   </section>
 
   {/* HSCaTについて */}
