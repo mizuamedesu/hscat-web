@@ -1,0 +1,151 @@
+---
+// スライドショーに使用する画像の配列
+const images = [
+  '/neko2.jpg',
+  '/neko3.jpg',
+  '/neko4.jpg',
+  '/neko5.jpg',
+  '/hero-background.jpg',
+];
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<div class={`hero-slideshow relative h-screen w-full flex items-center justify-center ${className}`}>
+  {images.map((image, index) => (
+    <div 
+      class="slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-100 bg-cover bg-center" 
+      style={`background-image: url(${image})`}
+      data-index={index}
+      data-active={index === 0 ? "true" : "false"}
+    >
+    </div>
+  ))}
+  
+  <div class="overlay bg-black/40 absolute inset-0"></div>
+  
+  <slot />
+  
+  <div class="controls absolute bottom-4 right-4 flex space-x-2 z-10">
+    <button class="prev-slide bg-white/30 hover:bg-white/50 text-white p-2 rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </button>
+    <button class="next-slide bg-white/30 hover:bg-white/50 text-white p-2 rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="indicators absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+    {images.map((_, index) => (
+      <button 
+        class="indicator w-3 h-3 rounded-full bg-white/50"
+        data-index={index}
+        data-active={index === 0 ? "true" : "false"}
+      >
+      </button>
+    ))}
+  </div>
+</div>
+
+<script>
+  function initializeSlideshow() {
+    const slideshow = document.querySelector('.hero-slideshow');
+    if (!slideshow) return;
+
+    const slides = slideshow.querySelectorAll('.slide');
+    const prevButton = slideshow.querySelector('.prev-slide');
+    const nextButton = slideshow.querySelector('.next-slide');
+    const indicators = slideshow.querySelectorAll('.indicator');
+    
+    let currentIndex = 0;
+    let interval: ReturnType<typeof setInterval>;
+    
+    slides[0].classList.add('opacity-100');
+    slides[0].classList.remove('opacity-0');
+    indicators[0]?.classList.add('bg-white');
+    indicators[0]?.classList.remove('bg-white/50');
+    
+    const showSlide = (index: number) => {
+      slides.forEach((slide, i) => {
+        if (i === index) {
+          slide.classList.remove('opacity-0');
+          slide.classList.add('opacity-100');
+          slide.setAttribute('data-active', 'true');
+        } else {
+          slide.classList.remove('opacity-100');
+          slide.classList.add('opacity-0');
+          slide.setAttribute('data-active', 'false');
+        }
+      });
+      
+      indicators.forEach((indicator, i) => {
+        if (i === index) {
+          indicator.classList.remove('bg-white/50');
+          indicator.classList.add('bg-white');
+          indicator.setAttribute('data-active', 'true');
+        } else {
+          indicator.classList.remove('bg-white');
+          indicator.classList.add('bg-white/50');
+          indicator.setAttribute('data-active', 'false');
+        }
+      });
+      
+      currentIndex = index;
+    };
+    
+    const startAutoSlide = () => {
+      stopAutoSlide(); 
+      interval = setInterval(() => {
+        const nextIndex = (currentIndex + 1) % slides.length;
+        showSlide(nextIndex);
+      }, 5000);
+    };
+    
+    const stopAutoSlide = () => {
+      clearInterval(interval);
+    };
+    
+    const prevSlide = () => {
+      const prevIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
+      showSlide(prevIndex);
+      startAutoSlide(); 
+    };
+    
+    const nextSlide = () => {
+      const nextIndex = (currentIndex + 1) % slides.length;
+      showSlide(nextIndex);
+      startAutoSlide(); 
+    };
+    
+    prevButton?.addEventListener('click', prevSlide);
+    nextButton?.addEventListener('click', nextSlide);
+    
+    indicators.forEach((indicator) => {
+      indicator.addEventListener('click', () => {
+        const index = parseInt(indicator.getAttribute('data-index') || '0');
+        showSlide(index);
+        startAutoSlide(); 
+      });
+    });
+    
+    slideshow.addEventListener('mouseenter', stopAutoSlide);
+    slideshow.addEventListener('mouseleave', startAutoSlide);
+    
+    startAutoSlide();
+  }
+
+  document.addEventListener('astro:page-load', initializeSlideshow);
+  document.addEventListener('DOMContentLoaded', initializeSlideshow);
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initializeSlideshow();
+  }
+</script>
